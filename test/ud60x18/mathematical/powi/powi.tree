@@ -1,4 +1,4 @@
-powu.t.sol
+powi.t.sol
 ├── when the base is zero
 │  ├── when the exponent is zero
 │  │  └── it should return one
@@ -11,4 +11,7 @@ powu.t.sol
       ├── when the result overflows ud60x18
       │  └── it should revert
       └── when the result does not overflow ud60x18
-         └── it should return the correct value
+         ├── when the exponent is negative
+         │  └── it should return the correct value
+         └── when the exponent is positive
+            └── it should return the correct value
