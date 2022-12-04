@@ -81,7 +81,7 @@ UD60x18 constant ZERO = UD60x18.wrap(0);
                             MATHEMATICAL FUNCTIONS
 //////////////////////////////////////////////////////////////////////////*/
 
-using { avg, ceil, div, exp, exp2, floor, frac, gm, inv, ln, log10, log2, mul, pow, powu, sqrt } for UD60x18 global;
+using { avg, ceil, div, exp, exp2, floor, frac, gm, inv, ln, log10, log2, mul, pow, powi, powu, sqrt } for UD60x18 global;
 
 /// @notice Calculates the arithmetic average of x and y, rounding down.
 ///
@@ -511,6 +511,31 @@ function pow(UD60x18 x, UD60x18 y) pure returns (UD60x18 result) {
         } else {
             result = exp2(mul(log2(x), y));
         }
+    }
+}
+
+/// @notice Raises x (an UD60x18 number) to the power y (basic integer).
+///
+/// @dev When the exponent is negative uses the formula:
+///
+/// $$
+/// x^y = 1 / x^(-y)
+/// $$
+///
+/// Requirements:
+/// - All from `inv` and `powu`.
+///
+/// Caveats:
+/// - All from `powu`.
+///
+/// @param x The base as an UD60x18 number.
+/// @param y The exponent as an int256.
+/// @return result The result as an UD60x18 number.
+function powi(UD60x18 x, int256 y) pure returns (UD60x18 result) {
+    if (y < 0) {
+        result = inv(powu(x, uint256(-y)));
+    } else {
+        result = powu(x, uint256(y));
     }
 }
 
